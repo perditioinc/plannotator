@@ -221,7 +221,11 @@ Do NOT proceed with implementation until your plan is approved.
             const shouldSwitchAgent = result.agentSwitch && result.agentSwitch !== 'disabled';
             const targetAgent = result.agentSwitch || 'build';
 
-            // Send feedback to agent - it will automatically respond and address it
+            const message = result.approved
+              ? `# Code Review\n\nCode review completed — no changes requested.`
+              : `# Code Review Feedback\n\n${result.feedback}\n\nPlease address this feedback.`;
+
+            // Send feedback to agent
             try {
               await ctx.client.session.prompt({
                 path: { id: sessionId },
@@ -230,7 +234,7 @@ Do NOT proceed with implementation until your plan is approved.
                   parts: [
                     {
                       type: "text",
-                      text: `# Code Review Feedback\n\n${result.feedback}\n\nPlease address this feedback.`,
+                      text: message,
                     },
                   ],
                 },

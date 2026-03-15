@@ -183,7 +183,12 @@ if (args[0] === "sessions") {
   server.stop();
 
   // Output feedback (captured by slash command)
-  console.log(result.feedback || "No feedback provided.");
+  if (result.approved) {
+    console.log("Code review completed — no changes requested.");
+  } else {
+    console.log(result.feedback);
+    console.log("\nThe reviewer has identified issues above. You must address all of them.");
+  }
   process.exit(0);
 
 } else if (args[0] === "annotate") {

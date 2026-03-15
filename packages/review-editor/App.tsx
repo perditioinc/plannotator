@@ -504,6 +504,7 @@ const ReviewApp: React.FC = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          approved: false,
           feedback: feedbackMarkdown,
           annotations,
           ...(effectiveAgent && { agentSwitch: effectiveAgent }),
@@ -530,7 +531,8 @@ const ReviewApp: React.FC = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          feedback: 'LGTM - no changes requested.',
+          approved: true,
+          feedback: 'LGTM - no changes requested.', // unused — integrations branch on `approved` flag
           annotations: [],
         }),
       });
